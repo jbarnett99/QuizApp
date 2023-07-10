@@ -126,10 +126,12 @@ function checkAnswer(event) {
 
     if (parseInt(selectedOption) === currentQuestion.answer) {
         resultContainer.textContent = "Correct!";
+        submitButton.style.display = "none";
         score++;
     }
     else {
-        resultContainer.textContent = "Wrong!";
+        resultContainer.textContent = "You were close. The correct answer is " + currentQuestion.answer;
+        submitButton.style.display = "none";
     }
 }
 
@@ -144,6 +146,7 @@ function nextQuestion() {
     if (currentQuestionIndex < quizData.length) {
         resultContainer.textContent = null
         loadQuestion();
+        submitButton.style.display = "block";
     } else {
         showResult();
     }

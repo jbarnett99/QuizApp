@@ -116,8 +116,6 @@ function selectedAnswer(event) {
 
 submitButton.addEventListener("click", checkAnswer);
 
-
-
 // Function to check the selected answer
 function checkAnswer(event) {
     const currentQuestion = quizData[currentQuestionIndex];
@@ -139,6 +137,7 @@ nextButton.addEventListener("click", nextQuestion);
 function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < quizData.length) {
+        resultContainer.textContent = null
         loadQuestion();
     } else {
         showResult();

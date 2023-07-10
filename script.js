@@ -77,11 +77,13 @@ const optionsContainer = document.getElementById("options");
 const submitButton = document.getElementById("submit");
 const resultContainer = document.getElementById("result");
 const nextButton = document.getElementById("next");
+const retakeButton = document.getElementById("retake")
 
 
 let currentQuestionIndex = 0;
 let score = 0;
 let selectedOption = 0;
+retakeButton.style.display = "none";
 
 
 // Load the first question
@@ -151,4 +153,23 @@ function showResult() {
     submitButton.style.display = "none";
     resultContainer.textContent = `Your score: ${score}/${quizData.length}`;
     resultContainer.style.display = "block";
+    nextButton.style.display = "none";
+    retakeButton.style.display = "block"
+}
+
+retakeButton.addEventListener("click", retakeQuiz);
+
+function retakeQuiz() {
+    questionContainer.style.display = "";
+    optionsContainer.style.display = "";
+    submitButton.style.display = "";
+    resultContainer.textContent = "none";
+    resultContainer.style.display = "";
+    nextButton.style.display = "";
+    retakeButton.style.display = "none"
+
+    currentQuestionIndex = "-2";
+    currentQuestionIndex++;
+    retakeButton.style.display = "none";
+    nextQuestion();
 }

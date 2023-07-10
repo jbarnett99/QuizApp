@@ -79,12 +79,13 @@ const resultContainer = document.getElementById("result");
 const nextButton = document.getElementById("next");
 const retakeButton = document.getElementById("retake")
 
+// Hiding the retake quiz button until the end
+retakeButton.style.display = "none";
 
+// Setting initial variables
 let currentQuestionIndex = 0;
 let score = 0;
 let selectedOption = 0;
-retakeButton.style.display = "none";
-
 
 // Load the first question
 loadQuestion();
@@ -114,11 +115,11 @@ function selectedAnswer(event) {
     console.log(selectedOption);
 }
 
-// Fuction to submit the user's final answer for review
+// Check Answer Action
 
 submitButton.addEventListener("click", checkAnswer);
 
-// Function to check the selected answer
+// Function to compare the selected answer to the actual answer
 function checkAnswer(event) {
     const currentQuestion = quizData[currentQuestionIndex];
     console.log(selectedOption);
@@ -130,11 +131,13 @@ function checkAnswer(event) {
     else {
         resultContainer.textContent = "Wrong!";
     }
-
-
 }
 
+// Next Question Action
+
 nextButton.addEventListener("click", nextQuestion);
+
+// Function to move to the next question on button click
 
 function nextQuestion() {
     currentQuestionIndex++;
@@ -157,7 +160,10 @@ function showResult() {
     retakeButton.style.display = "block"
 }
 
+// Retake Quiz Action
 retakeButton.addEventListener("click", retakeQuiz);
+
+// Function to start the quiz over
 
 function retakeQuiz() {
     questionContainer.style.display = "";
@@ -171,5 +177,7 @@ function retakeQuiz() {
     currentQuestionIndex = "-2";
     currentQuestionIndex++;
     retakeButton.style.display = "none";
+    score = "0"
     nextQuestion();
+
 }

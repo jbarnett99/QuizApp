@@ -1,0 +1,28 @@
+body {
+    border: solid 10px;
+    border-color: blue;
+    align-items: center;
+    flex: auto;
+    flex-direction: column;
+    margin: 20%;
+    padding: 5%;
+    text-align: center;
+
+}
+
+options {
+    margin: 50px;
+}
+
+h2 {
+    color: blue;
+}
+
+div {
+    flex: auto;
+    align-items: center;
+}
+
+.highlight {
+    background-color: yellow;
+}

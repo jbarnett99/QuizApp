@@ -81,11 +81,13 @@ const retakeButton = document.getElementById("retake")
 
 // Hiding the retake quiz button until the end
 retakeButton.style.display = "none";
+nextButton.style.display = "none";
 
 // Setting initial variables
 let currentQuestionIndex = 0;
 let score = 0;
-let selectedOption = 0;
+let selectedOption = null - 65;
+let button = 0;
 
 // Load the first question
 loadQuestion();
@@ -102,19 +104,43 @@ function loadQuestion() {
 
     // Create options
     currentQuestion.options.forEach(option => {
-        const button = document.createElement("button");
+        button = document.createElement("button");
         button.textContent = option;
         button.addEventListener("click", selectedAnswer);
         optionsContainer.appendChild(button);
+
     });
 }
 
+
+
 // Function to record the user's selection
 function selectedAnswer(event) {
+    const buttons = optionsContainer.querySelectorAll("button");
+    const selectedButton = buttons[optionIndex];
+
+    if (selectedOption === optionIndex) {
+        // Deselect the button if it's already selected
+        selectedButton.classList.remove("highlight");
+        selectedOption = null;
+    } else {
+        // Deselect the previously selected button (if any)
+        const previouslySelectedButton = optionsContainer.querySelector(".highlight");
+        if (previouslySelectedButton) {
+            previouslySelectedButton.classList.remove(".highlight");
+        }
+
+        // Select the clicked button and update the selected option
+        selectedButton.classList.add("selected");
+        selectedOption = optionIndex;
+    }
+
+    // Remove background color from previously selected button
     selectedOption = event.target.textContent;
     console.log(selectedOption);
+    event.target.classList.toggle("highlight");
+    console.log(selectedOption.class);
 }
-
 // Check Answer Action
 
 submitButton.addEventListener("click", checkAnswer);
@@ -123,6 +149,8 @@ submitButton.addEventListener("click", checkAnswer);
 function checkAnswer(event) {
     const currentQuestion = quizData[currentQuestionIndex];
     console.log(selectedOption);
+    nextButton.style.display = "block";
+
 
     if (parseInt(selectedOption) === currentQuestion.answer) {
         resultContainer.textContent = "Correct!";

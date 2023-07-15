@@ -86,7 +86,7 @@ nextButton.style.display = "none";
 // Setting initial variables
 let currentQuestionIndex = 0;
 let score = 0;
-let selectedOption = null - 65;
+let selectedOption = null;
 let button = 0;
 
 // Load the first question
@@ -103,9 +103,10 @@ function loadQuestion() {
     optionsContainer.innerHTML = "";
 
     // Create options
-    currentQuestion.options.forEach(option => {
+    currentQuestion.options.forEach(options => {
         button = document.createElement("button");
-        button.textContent = option;
+        button.textContent = options;
+        button.id = `button-${options}`; // Assign a unique ID
         button.addEventListener("click", selectedAnswer);
         optionsContainer.appendChild(button);
 
@@ -116,26 +117,32 @@ function loadQuestion() {
 
 // Function to record the user's selection
 function selectedAnswer(event) {
+
+
     const buttons = optionsContainer.querySelectorAll("button");
-    const selectedButton = buttons[optionIndex];
+    console.log(button);
 
-    if (selectedOption === optionIndex) {
-        // Deselect the button if it's already selected
-        selectedButton.classList.remove("highlight");
-        selectedOption = null;
-    } else {
-        // Deselect the previously selected button (if any)
-        const previouslySelectedButton = optionsContainer.querySelector(".highlight");
-        if (previouslySelectedButton) {
-            previouslySelectedButton.classList.remove(".highlight");
-        }
-
-        // Select the clicked button and update the selected option
-        selectedButton.classList.add("selected");
-        selectedOption = optionIndex;
-    }
-
-    // Remove background color from previously selected button
+    /*
+     const selectedButton = buttons[optionIndex];
+ 
+ 
+         if (selectedOption === optionIndex) {
+             // Deselect the button if it's already selected
+             selectedButton.classList.remove("highlight");
+             selectedOption = null;
+         } else {
+             // Deselect the previously selected button (if any)
+             const previouslySelectedButton = optionsContainer.querySelector(".highlight");
+             if (previouslySelectedButton) {
+                 previouslySelectedButton.classList.remove("highlight");
+             }
+     
+             // Select the clicked button and update the selected option
+             selectedButton.classList.add("selected");
+             selectedOption = optionIndex;
+         }
+     
+     */
     selectedOption = event.target.textContent;
     console.log(selectedOption);
     event.target.classList.toggle("highlight");

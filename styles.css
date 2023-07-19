@@ -10,8 +10,10 @@ body {
 
 }
 
-options {
-    margin: 50px;
+#answers div {
+    margin: 10px;
+    border: solid 5px;
+    border-color: darkgray;
 }
 
 h2 {

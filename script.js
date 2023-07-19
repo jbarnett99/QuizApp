@@ -72,12 +72,12 @@ const quizData = [
 ];
 
 // Access HTML elements
-const questionContainer = document.getElementById("question");
-const optionsContainer = document.getElementById("options");
-const submitButton = document.getElementById("submit");
-const resultContainer = document.getElementById("result");
-const nextButton = document.getElementById("next");
-const retakeButton = document.getElementById("retake")
+let questionContainer = document.getElementById("question");
+let optionsContainer = document.getElementById("answers");
+let submitButton = document.getElementById("submit");
+let resultContainer = document.getElementById("result");
+let nextButton = document.getElementById("next");
+let retakeButton = document.getElementById("retake")
 
 // Hiding the retake quiz button until the end
 retakeButton.style.display = "none";
@@ -87,62 +87,69 @@ nextButton.style.display = "none";
 let currentQuestionIndex = 0;
 let score = 0;
 let selectedOption = null;
-let button = 0;
+let availableOption = 0;
+
 
 // Load the first question
 loadQuestion();
 
 // Function to load a question
 function loadQuestion() {
+    nextButton.style.display = "none";
     const currentQuestion = quizData[currentQuestionIndex];
     questionContainer.textContent = currentQuestion.question;
     console.log(currentQuestion);
-    console.log(questionContainer.tectContent);
+    console.log(questionContainer.textContent);
 
     // Clear options container
     optionsContainer.innerHTML = "";
 
+    /*
+        function displayQuestion(question) {
+            console.log("Question:", question.content);
+            console.log("Correct Answer:", question.correctAnswer);
+    
+            correctIndex = question.correctAnswer;
+            question_element.innerText = question.content;
+            for (let answer of question.answers) {
+                let answer_element = document.createElement("div");
+                answer_element.innerText = answer;
+                answer_element.addEventListener("click", () => {
+                    clearHighlight();
+                    answer_element.classList.add("highlight");
+                    selectedIndex = question.answers.indexOf(answer_element.innerText);
+                    console.log("Selected Index:", selectedIndex);
+                    nextBtn.style.display = "block";
+                });
+                all_answers_element.appendChild(answer_element);
+            }
+        }
+    
+        */
+
     // Create options
-    currentQuestion.options.forEach(options => {
-        button = document.createElement("button");
-        button.textContent = options;
-        button.id = `button-${options}`; // Assign a unique ID
-        button.addEventListener("click", selectedAnswer);
-        optionsContainer.appendChild(button);
+    currentQuestion.options.forEach(option => {
+        console.log(option);
+        let optionsDiv = document.createElement("div");
+        optionsDiv.innerText = option;
+        optionsDiv.addEventListener("click", selectedAnswer);
+        optionsContainer.appendChild(optionsDiv);
 
     });
 }
 
 
 
+function clearHighlight(event) {
+    for (let availableOption of optionsContainer.children) {
+        availableOption.classList.remove("highlight");
+    }
+}
+
 // Function to record the user's selection
 function selectedAnswer(event) {
-
-
-    const buttons = optionsContainer.querySelectorAll("button");
-    console.log(button);
-
-    /*
-     const selectedButton = buttons[optionIndex];
- 
- 
-         if (selectedOption === optionIndex) {
-             // Deselect the button if it's already selected
-             selectedButton.classList.remove("highlight");
-             selectedOption = null;
-         } else {
-             // Deselect the previously selected button (if any)
-             const previouslySelectedButton = optionsContainer.querySelector(".highlight");
-             if (previouslySelectedButton) {
-                 previouslySelectedButton.classList.remove("highlight");
-             }
-     
-             // Select the clicked button and update the selected option
-             selectedButton.classList.add("selected");
-             selectedOption = optionIndex;
-         }
-     
-     */
+    clearHighlight();
+    console.log(event);
     selectedOption = event.target.textContent;
     console.log(selectedOption);
     event.target.classList.toggle("highlight");
@@ -155,8 +162,9 @@ submitButton.addEventListener("click", checkAnswer);
 // Function to compare the selected answer to the actual answer
 function checkAnswer(event) {
     const currentQuestion = quizData[currentQuestionIndex];
-    console.log(selectedOption);
+    console.log("Submitted answer was " + selectedOption);
     nextButton.style.display = "block";
+    optionDiv.disabled = true;
 
 
     if (parseInt(selectedOption) === currentQuestion.answer) {
